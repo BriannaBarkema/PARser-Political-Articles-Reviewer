@@ -9,10 +9,10 @@ CORS(app, support_credentials=True) # Enable CORS for the API, allowing requests
 @app.route('/analyze', methods=['GET'])
 def analyze():
     text = request.args.get('text')
-    return render_template('analysis.html', text=text)
+    return render_template('app.html', text=text)
 
 @app.route('/process', methods=['POST'])
-def analyze():
+def process():
     if request.method == 'POST':
         # they should have sent a json with one key, 'article', which is the article to be analyzed
         data = request.get_json()
