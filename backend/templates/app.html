@@ -7,8 +7,30 @@
 </head>
 <body>
     <h1>Welcome to PARser</h1>
-    <p>{{text}}</p>
-    <button>Process it!</button>
-    <textarea>Result</textarea>
+    <h2>Your input:</h2>
+    <p id="text">{{text}}</p>
+    <button id="process-btn">Process it!</button>
+    <h2>Analysis Results:</h2>
+    <p id="result"></p>
 </body>
+<script>
+
+    let text = document.getElementById('text').innerText;
+
+    document.getElementById('process-btn').addEventListener('click', async function() {
+
+        // Send POST request to /process with the text as the body
+        const response = await fetch('/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({article: text})
+        });
+
+        // Get the response and set it on the UI
+        const result = await response.json();
+        document.getElementById('result').innerText = result;
+    });
+</script>
 </html>
