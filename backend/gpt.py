@@ -1,9 +1,9 @@
 from openai import OpenAI
 
 with open('OpenAIAPIKey.txt', 'r') as f:
-    api_key = f.read()
+    api_key = f.read().strip()
 
-client = OpenAI(api_key)
+client = OpenAI(api_key=api_key)
 
 with open('Prompt.txt', 'r') as f:
     prompt = f.read()
@@ -28,7 +28,7 @@ def analyze_misinformation_and_bias(article):
             {"role": "user", "content": f"Analyze the article: {article}"}
         ]
     )
-    
+
     result = completion['choices'][0]['message']['content']
     return result
     
