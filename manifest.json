@@ -4,8 +4,12 @@
     "description": "A political article reviewer, it will return a score indicating bias and political level.",
     "manifest_version": 3,
     "author": "Brianna Barkema, Rattandeep Singh, and Nicholas Assaderaghi",
-    "action":{
-        "default_popup": "index.html",
-        "default_title": "PAviewer"
+    "action": {
+      "default_title": "PAviewer",
+      "default_icon": "icon.png"
+    },
+    "permissions": ["activeTab", "scripting"],  
+    "background": {
+      "service_worker": "background.js"
     }
 }
