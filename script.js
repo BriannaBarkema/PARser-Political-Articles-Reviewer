@@ -1,9 +1,15 @@
-async function fetchData() {
-    const res=await fetch ("https://api.coronavirus.data.gov.uk/v1/data");
-    const record=await res.json();
-    document.getElementById("date").innerHTML=record.data[0].date;
-    document.getElementById("areaName").innerHTML=record.data[0].areaName;
-    document.getElementById("latestBy").innerHTML=record.data[0].latestBy;
-    document.getElementById("deathNew").innerHTML=record.data[0].deathNew;
+let article = "some dummy value";
+
+
+
+
+
+function analyze() {
+	document.getElementById("analyze").innerHTML = "Analyzing...";
+	// query the backend
 }
-fetchData();
+
+document.addEventListener('DOMContentLoaded', function() {
+ document.getElementById("analyze").addEventListener('click', analyze, false);
+}, false)
+
