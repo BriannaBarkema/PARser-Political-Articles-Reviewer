@@ -1,1 +1,1 @@
-## Political Article Reviewer (PARser)
+## Political Articles Reviewer (PARser)
