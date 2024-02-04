@@ -1,12 +1,17 @@
+<!-- 
+    app.html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PARSER</title>
+    <title>PARser</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <style>
         body {
             background-color: #f8f9fa;
@@ -32,7 +37,8 @@
             margin-top: 30px;
         }
 
-        #analysis_results {
+        #analysis_status {
+            display: none;
             margin-top: 20px;
         }
 
@@ -42,14 +48,16 @@
         }
 
         footer {
-            background-color: #343a40;
+            background-color: #343a40a5;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding-top: 15px;
+            padding-bottom: 0px;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
+
         /* Gradient progress bar */
         .progress {
             height: 20px;
@@ -60,64 +68,86 @@
 
         .progress-bar {
             border-radius: 10px;
+            background-color: rgba(191, 0, 255, 0.3);
         }
 
-        /* Define gradient colors */
+        /* Gradient progress bar for political bias */
         .bias-gradient {
-            background: linear-gradient(to right, #3498db, #ffffff, #e74c3c);
+            background: linear-gradient(to right, rgba(52, 152, 219, 1), rgba(255, 255, 255, 0), rgba(231, 76, 60, 1));
+        }
+
+        /* Gradient progress bar for misinformation */
+        .misinformation-gradient {
+            background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1));
         }
     </style>
 </head>
 
 <body>
     <div class="jumbotron">
-        <h1 class="display-1">PARSER</h1>
+        <h1 class="display-1">PARser</h1>
         <p class="lead">Analyze your news articles for misinformation and bias with machine learning!</p>
+        
     </div>
 
     <div class="container">
         <h2>Your input article:</h2>
         <p id="text">{{text}}</p>
         <button id="process-btn" class="btn btn-primary">Process it!</button>
-        <h2 id="analysis_results"></h2>
+        <h2 id="analysis_status">
+            Analyzing
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </h2>
 
         <div id="analysis_body">
             <h3 id="misinformation_rating"></h3>
-            <h4 class="text-danger">Most Misinformed Sentences</h4>
-            <ul class="list-group">
-                <li class="list-group-item" id="mi1">
-                    <span class="badge text-dark">1</span>&nbsp;
-                </li>
-                <li class="list-group-item" id="mi2">
-                    <span class="badge text-dark">2</span>&nbsp;
-                </li>
-                <li class="list-group-item" id="mi3">
-                    <span class="badge text-dark">3</span>&nbsp;
-                </li>
-            </ul>
-            <p id="misinformation_explanation"></p>
+            <div class="progress misinformation-gradient">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" id="misinformation-progress"></div>
+            </div>
+            <div id="mis">
+                <h4 class="text-danger">Most Misinformed Sentences</h4>
+                <ul class="list-group">
+                    <li class="list-group-item" id="mi1">
+                        <span class="badge text-dark">1</span>&nbsp;
+                    </li>
+                    <li class="list-group-item" id="mi2">
+                        <span class="badge text-dark">2</span>&nbsp;
+                    </li>
+                    <li class="list-group-item" id="mi3">
+                        <span class="badge text-dark">3</span>&nbsp;
+                    </li>
+                </ul>
+                <p id="misinformation_explanation"></p>
+            </div>
             <h3 id="bias_rating"></h3>
             <div class="progress bias-gradient">
                 <div class="progress-bar" role="progressbar" style="width: 0%;" id="bias-progress"></div>
             </div>
-            <h4 class="text-danger">Most Politically Biased Sentences</h4>
-            <ul class="list-group">
-                <li class="list-group-item" id="pb1">
-                    <span class="badge text-dark">1</span>&nbsp;
-                </li>
-                <li class="list-group-item" id="pb2">
-                    <span class="badge text-dark">2</span>&nbsp;
-                </li>
-                <li class="list-group-item" id="pb3">
-                    <span class="badge text-dark">3</span>&nbsp;
-                </li>
-            </ul>
-            <p id="political_bias_explanation"></p>
+            <div id="pol">
+                <h4 class="text-danger">Most Politically Biased Sentences</h4>
+                <ul class="list-group">
+                    <li class="list-group-item" id="pb1">
+                        <span class="badge text-dark">1</span>&nbsp;
+                    </li>
+                    <li class="list-group-item" id="pb2">
+                        <span class="badge text-dark">2</span>&nbsp;
+                    </li>
+                    <li class="list-group-item" id="pb3">
+                        <span class="badge text-dark">3</span>&nbsp;
+                    </li>
+                </ul>
+                <p id="political_bias_explanation"></p>
+            </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 
     <footer>
-        <p>PARSER is a project completed for DevFest 2024 by Nicholas Assaderaghi, Brianna Barkema, Maximo Librandi, and
+        <p>PARser is a project completed for DevFest 2024 by Nicholas Assaderaghi, Brianna Barkema, Maximo Librandi, and
             Rattandeep Singh.</p>
     </footer>
 
@@ -152,11 +182,17 @@
             progressBar.style.width = `${rating * 10}%`;
         }
 
+        function updateMisinformationProgressBar(rating) {
+            // Update the width of the progress bar based on the misinformation rating
+            const progressBar = document.getElementById('misinformation-progress');
+            progressBar.style.width = `${rating * 10}%`;
+        }
+
         let text = document.getElementById('text').innerText;
 
         document.getElementById('process-btn').addEventListener('click', async function () {
-
-            document.getElementById('analysis_results').innerText = "Analyzing...";
+            document.getElementById('process-btn').style.display = "none";
+            document.getElementById('analysis_status').style.display = "block";
 
             // Send POST request to /process with the text as the body
             const response = await fetch('/process', {
@@ -181,7 +217,7 @@
             const bias_sentences = result["bias_sentences"];
             const bias_explanation = result["bias_explanation"];
 
-            document.getElementById('analysis_results').innerText = "Analysis Results:";
+            document.getElementById('analysis_status').innerHTML = "Analysis Results:";
             document.getElementById('misinformation_rating').innerText = misinformation_rating_statement(misinformation_rating);
             document.getElementById('bias_rating').innerText = bias_rating_statement(bias_rating);
 
@@ -189,15 +225,35 @@
             document.getElementById('mi2').innerHTML += misinformation_sentences[1];
             document.getElementById('mi3').innerHTML += misinformation_sentences[2];
 
+            if (misinformation_sentences.length == 0) {
+                document.getElementById('mis').style.display = "none";
+            } else if (misinformation_sentences.length == 1) {
+                document.getElementById('mi2').style.display = "none";
+                document.getElementById('mi3').style.display = "none";
+            } else if (misinformation_sentences.length == 2) {
+                document.getElementById('mi3').style.display = "none";
+            }
+
             document.getElementById('misinformation_explanation').innerText = misinformation_explanation;
 
             document.getElementById('pb1').innerHTML += bias_sentences[0];
             document.getElementById('pb2').innerHTML += bias_sentences[1];
             document.getElementById('pb3').innerHTML += bias_sentences[2];
 
+            if (bias_sentences.length == 0) {
+                document.getElementById('pol').style.display = "none";
+            } else if (bias_sentences.length == 1) {
+                document.getElementById('pb2').style.display = "none";
+                document.getElementById('pb3').style.display = "none";
+            } else if (bias_sentences.length == 2) {
+                document.getElementById('pb3').style.display = "none";
+            }
+
             document.getElementById('political_bias_explanation').innerText = bias_explanation;
 
             updateBiasProgressBar(bias_rating);
+            updateMisinformationProgressBar(misinformation_rating);
+
             document.getElementById('analysis_body').style.display = "block";
         });
     </script>

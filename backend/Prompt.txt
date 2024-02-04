@@ -5,4 +5,5 @@ Also, explain why these are the top 3 sentences with the most misinformation.
 Also, rate the article from 0-10 on political bias, where 0 is a strong liberal bias, 10 is a strong conservative bias, and 5 is neutral (no bias).
 Also, rank the top 3 sentences in order of bias.
 Also, explain why these are the top 3 sentences with the most bias.
-Return the result as a json with 6 keys: misinformation_rating, misinformation_sentences, misinformation_explanation, bias_rating, bias_sentences, bias_explanation.
+Return the result as a json with 6 keys: misinformation_rating (integer), misinformation_sentences (array of 3 strings), misinformation_explanation (string), bias_rating (integer), bias_sentences (array of 3 strings), bias_explanation (string).
+Make sure to use proper json syntax.

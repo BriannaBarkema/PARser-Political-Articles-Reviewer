@@ -1,0 +1,16 @@
+{
+    "misinformation_rating": 7,
+    "misinformation_sentences": [
+      "The principal of an Oklahoma elementary school who also has a background as a drag queen and previously faced child pornography charges has resigned, education officials said this week.",
+      "Murnan was connected to the alleged drag queen activities by the popular Libs of TikTok social media account in September 2023.",
+      "\"The issues at Western Heights continue. What is going on with their hiring practices?\" Walters asked. \"It will not be tolerated here in Oklahoma to have drag queens in the classroom.\""
+    ],
+    "misinformation_explanation": "The top 3 sentences contain misinformation because they make unsubstantiatd claims about the principal's past criminal charges, connect him to drag queen activities without providing evidence, and misrepresent the stance of education officials on having drag queens in the classroom.",
+    "bias_rating": 6,
+    "bias_sentences": [
+      "Shortly after he was hired, the Western Heights School District announced that it was \"aware of previous charges that were dismissed more than 20 years ago.\"",
+      "Ryan Walters, the Oklahoma Superintendent of Public Instruction, called on him to step down, while praising the social media account for outing him.",
+      "\"The drag queen is out at Western Heights. I've demanded it from day one,\" Walters said in a video posted Friday on X. \"This is not what parents want for their kids.\""
+    ],
+    "bias_explanation": "The top 3 sentences exhibit bias by selectively highlighting negative information about the principal's past charges, portraying the superintendent's praise of the social media account as a positive action, and presenting the superintendent's opinion as the definitive stance of all parents."
+  }

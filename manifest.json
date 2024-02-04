@@ -1,15 +1,21 @@
 {
-    "name": "Political Article Reviewer",
+    "name": "Political Article Reviewer (PARser)",
     "version": "1.0.0",
-    "description": "A political article reviewer, it will return a score indicating bias and political level.",
+    "description": "A political article reviewer, it will evaluate an article's bias and misinformation.",
     "manifest_version": 3,
     "author": "Brianna Barkema, Rattandeep Singh, and Nicholas Assaderaghi",
     "action": {
-      "default_title": "PAviewer",
-      "default_icon": "icon.png"
+      "default_title": "PARser",
+      "default_icon": "icons/icon48.png"
     },
     "permissions": ["activeTab", "scripting"],  
     "background": {
       "service_worker": "background.js"
+    },
+    "icons": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     }
 }
