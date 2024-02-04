@@ -8,134 +8,199 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        footer {
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            padding: 10px;
+        body {
+            background-color: #f8f9fa;
         }
+
+        .jumbotron {
+            background-color: rgb(37, 0, 49);
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        .lead {
+            font-size: 1.5em;
+        }
+
         #analysis_body {
             display: none;
+            margin-top: 30px;
+        }
+
+        #analysis_results {
+            margin-top: 20px;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 10px;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Gradient progress bar */
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+        }
+
+        /* Define gradient colors */
+        .bias-gradient {
+            background: linear-gradient(to right, #3498db, #ffffff, #e74c3c);
         }
     </style>
 </head>
 
 <body>
-    <div class="jumbotron" style="background-color: rgb(37, 0, 49);">
-        <h1 class="display-1 text-light">PARSER</h1>
-        <p class="lead text-light">Analyze your news articles for misinformation and bias with machine learning!</p>
+    <div class="jumbotron">
+        <h1 class="display-1">PARSER</h1>
+        <p class="lead">Analyze your news articles for misinformation and bias with machine learning!</p>
     </div>
-    <h2>Your input article:</h2>
-    <p id="text">{{text}}</p>
-    <button id="process-btn" class="btn btn-primary">Process it!</button>
-    <h2 id="analysis_results"></h2>
-    <div id="analysis_body">
-        <h3 id="misinformation_rating"></h3>
-        <h4 class="text-danger">Most Misinformed Sentences</h4>
-        <ul class="list-group">
-            <li class="list-group-item" id="mi1">
-                <span class="badge text-dark">1</span>&nbsp;
-            </li>
-            <li class="list-group-item" id="mi2">
-                <span class="badge text-dark">2</span>&nbsp;
-            </li>
-            <li class="list-group-item" id="mi3">
-                <span class="badge text-dark">3</span>&nbsp;
-            </li>
-        </ul>
-        <p id="misinformation_explanation"></p>
-        <h3 id="bias_rating"></h3>
-        <h4 class="text-danger">Most Politically Biased Sentences</h4>
-        <p>
-        <ul class="list-group">
-            <li class="list-group-item" id="pb1">
-                <span class="badge text-dark">1</span>&nbsp;
-            </li>
-            <li class="list-group-item" id="pb2">
-                <span class="badge text-dark">2</span>&nbsp;
-            </li>
-            <li class="list-group-item" id="pb3">
-                <span class="badge text-dark">3</span>&nbsp;
-            </li>
-        <p id="political_bias_explanation"></p>
+
+    <div class="container">
+        <h2>Your input article:</h2>
+        <p id="text">{{text}}</p>
+        <button id="process-btn" class="btn btn-primary">Process it!</button>
+        <h2 id="analysis_results"></h2>
+
+        <div id="analysis_body">
+            <h3 id="misinformation_rating"></h3>
+            <h4 class="text-danger">Most Misinformed Sentences</h4>
+            <ul class="list-group">
+                <li class="list-group-item" id="mi1">
+                    <span class="badge text-dark">1</span>&nbsp;
+                </li>
+                <li class="list-group-item" id="mi2">
+                    <span class="badge text-dark">2</span>&nbsp;
+                </li>
+                <li class="list-group-item" id="mi3">
+                    <span class="badge text-dark">3</span>&nbsp;
+                </li>
+            </ul>
+            <p id="misinformation_explanation"></p>
+            <h3 id="bias_rating"></h3>
+            <div class="progress bias-gradient">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" id="bias-progress"></div>
+            </div>
+            <h4 class="text-danger">Most Politically Biased Sentences</h4>
+            <ul class="list-group">
+                <li class="list-group-item" id="pb1">
+                    <span class="badge text-dark">1</span>&nbsp;
+                </li>
+                <li class="list-group-item" id="pb2">
+                    <span class="badge text-dark">2</span>&nbsp;
+                </li>
+                <li class="list-group-item" id="pb3">
+                    <span class="badge text-dark">3</span>&nbsp;
+                </li>
+            </ul>
+            <p id="political_bias_explanation"></p>
+        </div>
     </div>
 
     <footer>
-        <p> PARSER is a project completed for DevFest 2024 by Nicholas Assaderaghi, Brianna Barkema, Maximo Librandi, and Rattandeep Singh. </p>
+        <p>PARSER is a project completed for DevFest 2024 by Nicholas Assaderaghi, Brianna Barkema, Maximo Librandi, and
+            Rattandeep Singh.</p>
     </footer>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-<script>
 
-    function misinformation_rating_statement(rating) {
-        if (rating < 3) {
-            return `This article is likely to be accurate, with a misinformation rating of ${rating}/10.`;
-        } else if (rating < 6) {
-            return `This article is likely to contain some misinformation, with a misinformation rating of ${rating}/10.`;
-        } else {
-            return `This article is likely to contain a lot of misinformation, with a misinformation rating of ${rating}/10.`;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+
+        function misinformation_rating_statement(rating) {
+            if (rating < 3) {
+                return `This article is likely to be accurate, with a misinformation rating of ${rating}/10.`;
+            } else if (rating < 6) {
+                return `This article is likely to contain some misinformation, with a misinformation rating of ${rating}/10.`;
+            } else {
+                return `This article is likely to contain a lot of misinformation, with a misinformation rating of ${rating}/10.`;
+            }
         }
-    }
 
-    function bias_rating_statement(rating) {
-        if (rating < 3) {
-            return `This article is likely to be liberally-biased, with a bias rating of ${rating}/10.`;
-        } else if (rating < 6) {
-            return `This article is likely to be neutral, with a bias rating of ${rating}/10.`;
-        } else {
-            return `This article is likely to be conservatively-biased, with a bias rating of ${rating}/10.`;
+        function bias_rating_statement(rating) {
+            if (rating < 3) {
+                return `This article is likely to be liberally-biased, with a bias rating of ${rating}/10.`;
+            } else if (rating < 6) {
+                return `This article is likely to be neutral, with a bias rating of ${rating}/10.`;
+            } else {
+                return `This article is likely to be conservatively-biased, with a bias rating of ${rating}/10.`;
+            }
         }
-    }
 
-    let text = document.getElementById('text').innerText;
+        function updateBiasProgressBar(rating) {
+            // Update the width of the progress bar based on the political bias rating
+            const progressBar = document.getElementById('bias-progress');
+            progressBar.style.width = `${rating * 10}%`;
+        }
 
-    document.getElementById('process-btn').addEventListener('click', async function () {
+        let text = document.getElementById('text').innerText;
 
-        document.getElementById('analysis_results').innerText = "Analyzing...";
+        document.getElementById('process-btn').addEventListener('click', async function () {
 
-        // Send POST request to /process with the text as the body
-        const response = await fetch('/process', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ article: text })
+            document.getElementById('analysis_results').innerText = "Analyzing...";
+
+            // Send POST request to /process with the text as the body
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ article: text })
+            });
+
+            // Get the response and set it on the UI
+
+            const result_json_string = await response.json();
+            console.log(result_json_string);
+            const result = JSON.parse(result_json_string);
+            console.log(result)
+
+            const misinformation_rating = result["misinformation_rating"];
+            const misinformation_sentences = result["misinformation_sentences"];
+            const misinformation_explanation = result["misinformation_explanation"];
+            const bias_rating = result["bias_rating"];
+            const bias_sentences = result["bias_sentences"];
+            const bias_explanation = result["bias_explanation"];
+
+            document.getElementById('analysis_results').innerText = "Analysis Results:";
+            document.getElementById('misinformation_rating').innerText = misinformation_rating_statement(misinformation_rating);
+            document.getElementById('bias_rating').innerText = bias_rating_statement(bias_rating);
+
+            document.getElementById('mi1').innerHTML += misinformation_sentences[0];
+            document.getElementById('mi2').innerHTML += misinformation_sentences[1];
+            document.getElementById('mi3').innerHTML += misinformation_sentences[2];
+
+            document.getElementById('misinformation_explanation').innerText = misinformation_explanation;
+
+            document.getElementById('pb1').innerHTML += bias_sentences[0];
+            document.getElementById('pb2').innerHTML += bias_sentences[1];
+            document.getElementById('pb3').innerHTML += bias_sentences[2];
+
+            document.getElementById('political_bias_explanation').innerText = bias_explanation;
+
+            updateBiasProgressBar(bias_rating);
+            document.getElementById('analysis_body').style.display = "block";
         });
-
-        // Get the response and set it on the UI
-
-        const result_json_string = await response.json();
-        console.log(result_json_string);
-        const result = JSON.parse(result_json_string);
-        console.log(result)
-
-        const misinformation_rating = result["misinformation_rating"];
-        const misinformation_sentences = result["misinformation_sentences"];
-        const misinformation_explanation = result["misinformation_explanation"];
-        const bias_rating = result["bias_rating"];
-        const bias_sentences = result["bias_sentences"];
-        const bias_explanation = result["bias_explanation"];
-
-        document.getElementById('analysis_results').innerText = "Analysis Results:";
-        document.getElementById('misinformation_rating').innerText = misinformation_rating_statement(misinformation_rating);
-        document.getElementById('bias_rating').innerText = bias_rating_statement(bias_rating);
-
-        document.getElementById('mi1').innerHTML += misinformation_sentences[0];
-        document.getElementById('mi2').innerHTML += misinformation_sentences[1];
-        document.getElementById('mi3').innerHTML += misinformation_sentences[2];
-
-        document.getElementById('misinformation_explanation').innerText = misinformation_explanation;
-
-        document.getElementById('pb1').innerHTML += bias_sentences[0];
-        document.getElementById('pb2').innerHTML += bias_sentences[1];
-        document.getElementById('pb3').innerHTML += bias_sentences[2];
-
-        document.getElementById('political_bias_explanation').innerText = bias_explanation;
-        
-        document.getElementById('analysis_body').style.display = "block";
-    });
-</script>
+    </script>
+</body>
 
 </html>
