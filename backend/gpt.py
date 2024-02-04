@@ -29,6 +29,7 @@ def analyze_misinformation_and_bias(article):
         ]
     )
 
-    result = completion['choices'][0]['message']['content']
+    result = completion.choices[0].message.content
+    print(f"Result: {result}")
     return result
     
